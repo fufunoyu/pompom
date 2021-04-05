@@ -33,4 +33,14 @@ jobs:
           SCANTISTTOKEN: ${{secrets.SCANTISTTOKEN }}
           SCANTIST_IMPORT_URL : "https://api-staging.scantist.io/ci-scan/"
         run: java -jar scantist-bom-detect.jar
+        
+      - name: Upload to Snyk
+        env:
+          SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
+        run: |
+          npm install -g snyk
+          snyk -v
+          snyk auth $SNYK_TOKEN
+          snyk test 
+
     
